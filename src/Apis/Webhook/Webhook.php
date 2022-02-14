@@ -50,7 +50,7 @@ class Webhook
         }
     }
 
-    function validateUrl($url)
+    public function validateUrl($url)
     {
         $defaultHostPattern = '/^sns\.[a-zA-Z0-9\-]{3,}\.amazonaws\.com(\.cn)?$/';
         $parsed = parse_url($url);
@@ -62,7 +62,7 @@ class Webhook
         }
     }
 
-    function get_content($URL)
+    public function get_content($URL)
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -72,7 +72,7 @@ class Webhook
         return $data;
     }
 
-    function getStringToSign($message)
+    public function getStringToSign($message)
     {
         $signableKeys = [
             'Message',

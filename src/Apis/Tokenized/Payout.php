@@ -5,6 +5,7 @@ namespace Divergent\Bkash\Apis\Tokenized;
 class Payout extends TokenizedBaseApi
 {
 
+    // Innitialized.
     public function initiatPayout($type = 'B2B', $reference = '')
     {
         return $this->callApi(
@@ -18,6 +19,7 @@ class Payout extends TokenizedBaseApi
         );
     }
 
+    // B2B Payout calling
     public function b2bPayout($payoutID, $amount, $merchantInvoiceNumber, $receiverMSISDN, $currency = 'BDT')
     {
         return $this->callApi(

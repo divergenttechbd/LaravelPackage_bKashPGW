@@ -15,12 +15,10 @@
             ]
         }
     },
-    "authors": [
-        {
-            "name": "Anthony Shoshi Gomes",
-            "email": "anthonyshoshigomes1996@gmail.com"
-        }
-    ],
+    "authors": [{
+        "name": "Anthony Shoshi Gomes",
+        "email": "anthonyshoshigomes1996@gmail.com"
+    }],
     "minimum-stability": "dev",
     "require": {}
 }
