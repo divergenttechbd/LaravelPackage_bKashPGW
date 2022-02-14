@@ -1,0 +1,26 @@
+{
+    "name": "divergent/bkash",
+    "description": "bKash payment gateway for Laravel.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Divergent\\Bkash\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Divergent\\Bkash\\BkashServiceProvider"
+            ]
+        }
+    },
+    "authors": [
+        {
+            "name": "Anthony Shoshi Gomes",
+            "email": "anthonyshoshigomes1996@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
