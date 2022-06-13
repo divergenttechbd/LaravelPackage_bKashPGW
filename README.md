@@ -9,7 +9,7 @@
 composer require divergent/bkash
 ```
 
-### For Laravel below 5.5 open config/app file and add this line in `providers` array
+### For Laravel version below 5.5 open config/app file and add this line in `providers` array
 
 If you are using Laravel version greater than 5.5 then skip this section
 
@@ -17,7 +17,7 @@ If you are using Laravel version greater than 5.5 then skip this section
 Divergent\Bkash\BkashServiceProvider::class,
 ```
 
-### After that run this command
+### After that run this command in command line/Terminal
 
 ```
 php artisan vendor:publish --provider="Divergent\Bkash\BkashServiceProvider"
@@ -430,7 +430,7 @@ You will get `$paymentID` and `$trxID` from [Execute Payment](#tokenized-execute
 
 ## Recurring Subscription
 
-For calling **Recurring Subscription** methods, first you need to create instance of **Subscription** class. To create instance you have to pass configurations as a parameter. For **Recurring Subscription**, you have to use `RECURRING` constant.
+For calling **Recurring Subscription** methods, first you need to create instance of **Subscription** class.
 
 Don't forget to `use Divergent\Bkash\Apis\Recurring\Subscription;` top of the file.
 
@@ -514,7 +514,7 @@ $subscription->subscriptionList($page, $size);
 
 ## Recurring Payment
 
-For calling **Recurring Payment** methods, first you need to create instance of **Payment** class. To create instance you have to pass configurations as a parameter. For **Recurring Payment**, you have to use `CHECKOUT` constant.
+For calling **Recurring Payment** methods, first you need to create instance of **Payment** class.
 
 Don't forget to `use Divergent\Bkash\Apis\Recurring\Payment;` top of the file.
 
@@ -576,7 +576,7 @@ To integrate webhook in your website, you need to create **two** url (route).
 
 One is to get notification from [Checkout](#checkout), [Tokenized](#tokenized) actions and another is for [Recurring](#recurring) product. 
 
-For calling **Webhook** methods, first you need to create instance of **Webhook** class. To create instance you have to pass configurations as a parameter.
+For calling **Webhook** methods, first you need to create instance of **Webhook** class.
 
 Don't forget to `use Divergent\Bkash\Apis\Webhook\Webhook;` top of the file.
 
