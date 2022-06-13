@@ -1,15 +1,17 @@
 <?php
 
-namespace Divergent\Bkash\Apis\Checkout;
+namespace Divergent\Bkash\Apis\Checkout\Traits;
 
-class Payment extends CheckoutBaseApi
+use Divergent\Bkash\Consts\BkashConstant;
+use Divergent\Bkash\Consts\EndPoints;
+
+trait Payment
 {
-
     public function create($amount, $merchantInvoiceNumber, $intent, $currency = 'BDT', $merchantAssociationInfo = null)
     {
         return $this->callApi(
-            'POST',
-            'payment/create',
+            BkashConstant::METHOD_POST,
+            EndPoints::CHECKOUT_CREATE_PAYMENT,
             [
                 'amount' => $amount,
                 'currency' => $currency,
@@ -23,33 +25,33 @@ class Payment extends CheckoutBaseApi
     public function execute($paymentID)
     {
         return $this->callApi(
-            'POST',
-            'payment/execute/' . $paymentID
+            BkashConstant::METHOD_POST,
+            EndPoints::CHECKOUT_EXECUTE_PAYMENT . $paymentID
         );
     }
 
     public function queryPayment($paymentID)
     {
         return $this->callApi(
-            'GET',
-            'payment/query/' . $paymentID
+            BkashConstant::METHOD_GET,
+            EndPoints::CHECKOUT_QUERY_PAYMENT . $paymentID
         );
     }
 
-    
+
     public function capture($paymentID)
     {
         return $this->callApi(
-            'POST',
-            'payment/capture/' . $paymentID
+            BkashConstant::METHOD_POST,
+            EndPoints::CHECKOUT_CAPTURE_PAYMENT . $paymentID
         );
     }
 
     public function void($paymentID)
     {
         return $this->callApi(
-            'POST',
-            'payment/void/' . $paymentID
+            BkashConstant::METHOD_POST,
+            EndPoints::CHECKOUT_VOID_PAYMENT . $paymentID
         );
     }
 }

@@ -104,14 +104,14 @@ NOTE: You can **add/remove** any fields (if you need) of these tables.
 
 ## Checkout Payment
 
-For calling **Checkout Payment** methods, first you need to create instance of **Payment** class. To create instance you have to pass configurations as a parameter. For **Checkout Payment**, you have to use `CHECKOUT` constant.
+For calling **Checkout Payment** methods, first you need to create instance of **CheckoutApi** class.
 
-Don't forget to `use Divergent\Bkash\Apis\Checkout\Payment;` top of the file.
+Don't forget to `use Divergent\Bkash\Apis\Checkout\CheckoutApi;` top of the file.
 
 NOTE: Configurations will be fetch from your previously setup in **.env** file. 
 
 ```
-$payment = new Payment(config(BkashConstant::CHECKOUT));
+$checkout = new CheckoutApi();
 ```
 
 ### Create Payment (Sale or Capture)
@@ -121,7 +121,7 @@ $amount = 'your product amount';
 $invoice_no = 'any unique number used in marchant side';
 $intent = env('BKASH_INTENT'); //intent will be 'sale' or 'authorization' which you have defined in .env file.
 
-$payment->create($amount, $invoice_no, $intent);
+$checkout->create($amount, $invoice_no, $intent);
 
 ```
 
@@ -130,7 +130,7 @@ $payment->create($amount, $invoice_no, $intent);
 ### Execute Payment
 
 ```
-$payment->execute($paymentID);
+$checkout->execute($paymentID);
 ```
 
 You will get `$paymentID` from [Create Payment](#create-payment-sale-or-capture)
@@ -138,7 +138,7 @@ You will get `$paymentID` from [Create Payment](#create-payment-sale-or-capture)
 ### Query Payment
 
 ```
-$payment->queryPayment($paymentID);
+$checkout->queryPayment($paymentID);
 ```
 
 You will get `$paymentID` from [Execute Payment](#execute-payment)
@@ -146,7 +146,7 @@ You will get `$paymentID` from [Execute Payment](#execute-payment)
 ### Capture Payment
 
 ```
-$payment->capture($paymentID);
+$checkout->capture($paymentID);
 ```
 
 You will get `$paymentID` from [Execute Payment](#execute-payment)
@@ -156,7 +156,7 @@ NOTE: **Capture Payment** will be used for payment with `authorization` intent.
 ### Void Payment
 
 ```
-$payment->void($paymentID);
+$checkout->void($paymentID);
 ```
 
 You will get `$paymentID` from [Execute Payment](#execute-payment)
@@ -165,24 +165,14 @@ NOTE: **Void Payment** will be used for payment with `authorization` intent.
 
 ## Checkout Payout
 
-For calling **Checkout Payout** methods, first you need to create instance of **Payout** class. To create instance you have to pass configurations as a parameter. For **Checkout Payout**, you have to use `CHECKOUT` constant.
-
-Don't forget to `use Divergent\Bkash\Apis\Checkout\Payout;` top of the file.
-
-NOTE: Configurations will be fetch from your previously setup in **.env** file. 
-
-```
-$payout = new Payout(config(BkashConstant::CHECKOUT));
-```
-
-### B2C Payout
+### Checkout B2C Payout
 
 ```
 $amount = 'payout amount';
 $merchantInvoiceNumber = 'any unique number used in marchant side';
 $receiverMSISDN = 'receiver wallet number';
 
-$payout->b2cPayment($amount, $merchantInvoiceNumber, $receiverMSISDN);
+$checkout->b2cPayment($amount, $merchantInvoiceNumber, $receiverMSISDN);
 ```
 
 ### Checkout B2B Payout
@@ -192,9 +182,9 @@ $amount = 'payout amount';
 $merchantInvoiceNumber = 'any unique number used in marchant side';
 $receiverMSISDN = 'receiver wallet number';
 
-$initPayout = $payout->initiatPayout();
+$initPayout = $checkout->initiatPayout();
 $payoutID = $initPayout['payoutID'];
-$payout->b2bPayout($payoutID, $amount, $merchantInvoiceNumber, $receiverMSISDN);
+$checkout->b2bPayout($payoutID, $amount, $merchantInvoiceNumber, $receiverMSISDN);
 ```
 
 First you have to call **initiatPayout** method which return you a **payoutID**. Then you can call **b2bPayout** to make B2B Payout.
@@ -202,27 +192,17 @@ First you have to call **initiatPayout** method which return you a **payoutID**.
 ### Checkout B2B Query Payout
 
 ```
-$payout->queryPayout($payoutID);
+$checkout->queryPayout($payoutID);
 ```
 
 You will get `$payoutID` from [Checkout B2B Payout](#checkout-b2b-payout).
 
 ## Checkout Supporting Operations
 
-For calling **Supporting Operations** methods, first you need to create instance of **SupportOperation** class. To create instance you have to pass configurations as a parameter. For **Supporting Operations**, you have to use `CHECKOUT` constant.
-
-Don't forget to `use Divergent\Bkash\Apis\Checkout\SupportOperation;` top of the file.
-
-NOTE: Configurations will be fetch from your previously setup in **.env** file. 
-
-```
-$supportOperation = new SupportOperation(config(BkashConstant::CHECKOUT));
-```
-
 ### Search Transaction
 
 ```
-$supportOperation->searchTransaction($trxID);
+$checkout->searchTransaction($trxID);
 ```
 
 You will get `$trxID` from [Execute Payment](#execute-payment)
@@ -230,7 +210,7 @@ You will get `$trxID` from [Execute Payment](#execute-payment)
 ### Query Organization Balance
 
 ```
-$supportOperation->queryOrgBalance();
+$checkout->queryOrgBalance();
 ```
 
 ### Intra-Account Transfer
@@ -239,20 +219,10 @@ $supportOperation->queryOrgBalance();
 $amount = 'amount to transfer';
 $transferType = 'transfer type'; //It can be either 'Collection2Disbursement' or 'Disbursement2Collection'.
 
-$supportOperation->intraAccountTransfer($amount, $transferType);
+$checkout->intraAccountTransfer($amount, $transferType);
 ```
 
 ## Checkout Refund
-
-For calling **Checkout Refund** methods, first you need to create instance of **Refund** class. To create instance you have to pass configurations as a parameter. For **Checkout Refund**, you have to use `CHECKOUT` constant.
-
-Don't forget to `use Divergent\Bkash\Apis\Checkout\Refund;` top of the file.
-
-NOTE: Configurations will be fetch from your previously setup in **.env** file. 
-
-```
-$refund = new Refund(config(BkashConstant::CHECKOUT));
-```
 
 ### Refund Transaction
 
@@ -263,7 +233,7 @@ $trxID = 'transaction ID';
 $sku = 'product unique code';
 $reason = 'reason for refund';
 
-$refund->refundTransaction($paymentID, $amount, $trxID, $sku, $reason);
+$checkout->refundTransaction($paymentID, $amount, $trxID, $sku, $reason);
 ```
 
 `$sku` and `$reason` are optional fields. You will get `$paymentID` and `$trxID` from [Execute Payment](#execute-payment).
@@ -271,21 +241,21 @@ $refund->refundTransaction($paymentID, $amount, $trxID, $sku, $reason);
 ### Refund Status
 
 ```
-$refund->refundStatus($paymentID, $trxID);
+$checkout->refundStatus($paymentID, $trxID);
 ```
 
 You will get `$paymentID` and `$trxID` from [Execute Payment](#execute-payment).
 
 ## Tokenized Agreement
 
-For calling **Tokenized Agreement** methods, first you need to create instance of **Agreement** class. To create instance you have to pass configurations as a parameter. For **Tokenized Agreement**, you have to use `TOKENIZED` constant.
+For calling **Tokenized Agreement** methods, first you need to create instance of **TokenizedApi** class.
 
-Don't forget to `use Divergent\Bkash\Apis\Tokenized\Agreement;` top of the file.
+Don't forget to `use Divergent\Bkash\Apis\Tokenized\TokenizedApi;` top of the file.
 
 NOTE: Configurations will be fetch from your previously setup in **.env** file. 
 
 ```
-$agreement = new Agreement(config(BkashConstant::TOKENIZED));
+$tokenized = new TokenizedApi();
 ```
 
 ### Create Agreement
@@ -293,7 +263,8 @@ $agreement = new Agreement(config(BkashConstant::TOKENIZED));
 ```
 $payerReference = 'any related reference value';
 
-$agreement->createAgreement(BkashConstant::CREATE_AGREEMENT, $payerReference);
+$tokenized->createAgreement(BkashConstant::CREATE_AGREEMENT, $payerReference);
+
 ```
 
 To create agreement, first `BkashConstant::CREATE_AGREEMENT` parameter need to pass which allow callback url to know which page to redirect. The possible constant list with defination is given below for better understanding - 
@@ -310,14 +281,14 @@ NOTE: **Merchant side must need to main database table to get to know if user is
 ### Execute Agreement
 
 ```
-$agreement->executeAgreement($paymentID);
+$tokenized->executeAgreement($paymentID);
 ```
 You will get `$paymentID` from [Create Agreement](#create-agreement).
 
 ### Agreement Status
 
 ```
-$agreement->status($agreementID);
+$tokenized->status($agreementID);
 ```
 
 You will get `$agreementID` from [Create Agreement](#create-agreement).
@@ -325,31 +296,26 @@ You will get `$agreementID` from [Create Agreement](#create-agreement).
 ### Agreement Cancel
 
 ```
-$agreement->cancel($agreementID);
+$tokenized->cancel($agreementID);
 ```
 
 You will get `$agreementID` from [Create Agreement](#create-agreement).
 
 ## Tokenized Payment
 
-For calling **Tokenized Payment** methods, first you need to create instance of **Payment** class. To create instance you have to pass configurations as a parameter. For **Tokenized Payment**, you have to use `TOKENIZED` constant.
-
-Don't forget to `use Divergent\Bkash\Apis\Tokenized\Payment;` top of the file.
-
-NOTE: Configurations will be fetch from your previously setup in **.env** file. 
-
-```
-$payment = new Payment(config(BkashConstant::TOKENIZED));
-```
-
 ### Tokenized Create Payment (Sale or Capture)
 
 ```
+$intent = 'sale or authorization'; //better to get data from ENV.
 $payerReference = 'any related reference value';
 $amount = 'your product amount';
 $invoice_no = 'any unique number used in marchant side';
 
-$payment->create(BkashConstant::PAYMENT, $payerReference, $amount, $invoice_no, $agreementID);
+//create payment with agreement
+$tokenized->createAgreement(BkashConstant::WITH_AGREEMENT_PAYMENT, $payerReference, $amount, $invoice_no, '');
+
+//create payment without agreement
+$tokenized->create($intent, BkashConstant::WITHOUT_AGREEMENT_PAYMENT, $payerReference, $amount, $invoice_no, '');
 
 ```
 
@@ -358,7 +324,7 @@ To create payment, first `BkashConstant::PAYMENT` parameter need to pass which a
 ### Tokenized Execute Payment
 
 ```
-$payment->execute($paymentID);
+$tokenized->execute($paymentID);
 ```
 
 You will get `$paymentID` from [Create Payment](#tokenized-create-payment-sale-or-capture).
@@ -366,7 +332,7 @@ You will get `$paymentID` from [Create Payment](#tokenized-create-payment-sale-o
 ### Tokenized Query Payment
 
 ```
-$payment->queryPayment($paymentID);
+$tokenized->queryPayment($paymentID);
 ```
 
 You will get `$paymentID` from [Execute Payment](#tokenized-execute-payment).
@@ -374,7 +340,7 @@ You will get `$paymentID` from [Execute Payment](#tokenized-execute-payment).
 ### Tokenized Capture Payment
 
 ```
-$payment->capture($paymentID);
+$tokenized->capture($paymentID);
 ```
 
 You will get `$paymentID` from [Execute Payment](#tokenized-execute-payment)
@@ -384,7 +350,7 @@ NOTE: **Tokenized Capture Payment** will be used for payment with `authorization
 ### Tokenized Void Payment
 
 ```
-$payment->void($paymentID);
+$tokenized->void($paymentID);
 ```
 
 You will get `$paymentID` from [Execute Payment](#tokenized-execute-payment)
@@ -393,14 +359,27 @@ NOTE: **Tokenized Void Payment** will be used for payment with `authorization` i
 
 ## Tokenized Payout
 
-For calling **Tokenized Payout** methods, first you need to create instance of **Payout** class. To create instance you have to pass configurations as a parameter. For **Tokenized Payout**, you have to use `TOKENIZED` constant.
-
-Don't forget to `use Divergent\Bkash\Apis\Tokenized\Payout;` top of the file.
-
-NOTE: Configurations will be fetch from your previously setup in **.env** file. 
+### Tokenized Intra-Account Transfer
 
 ```
-$payout = new Payout(config(BkashConstant::TOKENIZED));
+$amount = 'amount to transfer';
+$transferType = 'transfer type'; //It can be either 'Collection2Disbursement' or 'Disbursement2Collection'.
+
+$initPayout = $tokenized->initiatePayout("INTRA");
+$payoutID = $initPayout['payoutID'];
+$tokenized->intraAccountTransfer($amount, $transferType);
+```
+
+### Tokenized B2C Payout
+
+```
+$amount = 'payout amount';
+$merchantInvoiceNumber = 'any unique number used in marchant side';
+$receiverMSISDN = 'receiver wallet number';
+
+$initPayout = $tokenized->initiatPayout("B2C");
+$payoutID = $initPayout['payoutID'];
+$tokenized->b2cPayout($payoutID, $amount, $merchantInvoiceNumber, $receiverMSISDN);
 ```
 
 ### Tokenized B2B Payout
@@ -410,9 +389,9 @@ $amount = 'payout amount';
 $merchantInvoiceNumber = 'any unique number used in marchant side';
 $receiverMSISDN = 'receiver wallet number';
 
-$initPayout = $payout->initiatPayout();
+$initPayout = $tokenized->initiatPayout("B2B");
 $payoutID = $initPayout['payoutID'];
-$payout->b2bPayout($payoutID, $amount, $merchantInvoiceNumber, $receiverMSISDN);
+$tokenized->b2bPayout($payoutID, $amount, $merchantInvoiceNumber, $receiverMSISDN);
 ```
 
 First you have to call **initiatPayout** method which return you a **payoutID**. Then you can call **b2bPayout** to make B2B Payout.
@@ -420,22 +399,12 @@ First you have to call **initiatPayout** method which return you a **payoutID**.
 ### Tokenized B2B Query Payout
 
 ```
-$payout->queryPayout($payoutID);
+$tokenized->queryPayout($payoutID);
 ```
 
 You will get `$payoutID` from [Tokenized B2B Payout](#tokenized-b2b-payout).
 
 ## Tokenized Refund
-
-For calling **Tokenized Refund** methods, first you need to create instance of **Refund** class. To create instance you have to pass configurations as a parameter. For **Tokenized Refund**, you have to use `TOKENIZED` constant.
-
-Don't forget to `use Divergent\Bkash\Apis\Tokenized\Refund;` top of the file.
-
-NOTE: Configurations will be fetch from your previously setup in **.env** file. 
-
-```
-$refund = new Refund(config(BkashConstant::TOKENIZED));
-```
 
 ### Refund Transaction
 
@@ -446,7 +415,7 @@ $trxID = 'transaction ID';
 $sku = 'product unique code';
 $reason = 'reason for refund';
 
-$refund->refundTransaction($paymentID, $amount, $trxID, $sku, $reason);
+$tokenized->refundTransaction($paymentID, $amount, $trxID, $sku, $reason);
 ```
 
 `$sku` and `$reason` are optional fields. You will get `$paymentID` and `$trxID` from [Execute Payment](#tokenized-execute-payment).
@@ -454,7 +423,7 @@ $refund->refundTransaction($paymentID, $amount, $trxID, $sku, $reason);
 ### Refund Status
 
 ```
-$refund->refundStatus($paymentID, $trxID);
+$tokenized->refundStatus($paymentID, $trxID);
 ```
 
 You will get `$paymentID` and `$trxID` from [Execute Payment](#tokenized-execute-payment).
@@ -468,7 +437,7 @@ Don't forget to `use Divergent\Bkash\Apis\Recurring\Subscription;` top of the fi
 NOTE: Configurations will be fetch from your previously setup in **.env** file. 
 
 ```
-$subscription = new Subscription(config(BkashConstant::RECURRING));
+$subscription = new Subscription();
 ```
 
 ### Create Subscription
@@ -552,7 +521,7 @@ Don't forget to `use Divergent\Bkash\Apis\Recurring\Payment;` top of the file.
 NOTE: Configurations will be fetch from your previously setup in **.env** file. 
 
 ```
-$payment = new Payment(config(BkashConstant::RECURRING));
+$payment = new Payment();
 ```
 
 ### Payment List by Subscription ID

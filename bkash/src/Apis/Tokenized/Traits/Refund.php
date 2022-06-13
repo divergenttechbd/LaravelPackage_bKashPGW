@@ -1,15 +1,17 @@
 <?php
 
-namespace Divergent\Bkash\Apis\Tokenized;
+namespace Divergent\Bkash\Apis\Tokenized\Traits;
 
-class Refund extends TokenizedBaseApi
+use Divergent\Bkash\Consts\BkashConstant;
+use Divergent\Bkash\Consts\EndPoints;
+
+trait Refund
 {
-
     public function refundTransaction($paymentID, $amount, $trxID, $sku, $reason)
     {
         return $this->callApi(
-            'POST',
-            'payment/refund',
+            BkashConstant::METHOD_POST,
+            EndPoints::TOKENIZED_PAYMENT_REFUND,
             [
                 'paymentID' => $paymentID,
                 'amount' => $amount,
@@ -23,8 +25,8 @@ class Refund extends TokenizedBaseApi
     public function refundStatus($paymentID, $trxID)
     {
         return $this->callApi(
-            'POST',
-            'payment/refund',
+            BkashConstant::METHOD_POST,
+            EndPoints::TOKENIZED_REFUND_STATUS,
             [
                 'paymentID' => $paymentID,
                 'trxID'     => $trxID

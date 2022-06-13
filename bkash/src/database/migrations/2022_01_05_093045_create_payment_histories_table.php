@@ -27,6 +27,7 @@ class CreatePaymentHistoriesTable extends Migration
             $table->string('merchantInvoiceNumber');
             $table->integer('user_id');
             $table->longText('data');
+
             $table->timestamps();
         });
     }
