@@ -106,7 +106,7 @@ NOTE: You can **add/remove** any fields (if you need) of these tables.
 
 For calling **Checkout Payment** methods, first you need to create instance of **CheckoutApi** class.
 
-Don't forget to `use Divergent\Bkash\Apis\Checkout\CheckoutApi;` top of the file.
+Don't forget to import `use Divergent\Bkash\Apis\Checkout\CheckoutApi;` top of the file.
 
 NOTE: Configurations will be fetch from your previously setup in **.env** file. 
 
@@ -250,7 +250,7 @@ You will get `$paymentID` and `$trxID` from [Execute Payment](#execute-payment).
 
 For calling **Tokenized Agreement** methods, first you need to create instance of **TokenizedApi** class.
 
-Don't forget to `use Divergent\Bkash\Apis\Tokenized\TokenizedApi;` top of the file.
+Don't forget to import `use Divergent\Bkash\Apis\Tokenized\TokenizedApi;` top of the file.
 
 NOTE: Configurations will be fetch from your previously setup in **.env** file. 
 
@@ -432,7 +432,7 @@ You will get `$paymentID` and `$trxID` from [Execute Payment](#tokenized-execute
 
 For calling **Recurring Subscription** methods, first you need to create instance of **Subscription** class.
 
-Don't forget to `use Divergent\Bkash\Apis\Recurring\Subscription;` top of the file.
+Don't forget to import `use Divergent\Bkash\Apis\Recurring\Subscription;` top of the file.
 
 NOTE: Configurations will be fetch from your previously setup in **.env** file. 
 
@@ -516,7 +516,7 @@ $subscription->subscriptionList($page, $size);
 
 For calling **Recurring Payment** methods, first you need to create instance of **Payment** class.
 
-Don't forget to `use Divergent\Bkash\Apis\Recurring\Payment;` top of the file.
+Don't forget to import `use Divergent\Bkash\Apis\Recurring\Payment;` top of the file.
 
 NOTE: Configurations will be fetch from your previously setup in **.env** file. 
 
@@ -578,7 +578,7 @@ One is to get notification from [Checkout](#checkout), [Tokenized](#tokenized) a
 
 For calling **Webhook** methods, first you need to create instance of **Webhook** class.
 
-Don't forget to `use Divergent\Bkash\Apis\Webhook\Webhook;` top of the file.
+Don't forget to import `use Divergent\Bkash\Apis\Webhook\Webhook;` top of the file.
 
 ```
 $webhook = new Webhook();
