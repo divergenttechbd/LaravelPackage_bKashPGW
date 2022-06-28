@@ -108,10 +108,16 @@ For calling **Checkout Payment** methods, first you need to create instance of *
 
 Don't forget to import `use Divergent\Bkash\Apis\Checkout\CheckoutApi;` top of the file.
 
-NOTE: Configurations will be fetch from your previously setup in **.env** file. 
+NOTE: Configurations will be fetch from your previously setup in **.env** file. Remember that you need to set token for authorization.
 
 ```
 $checkout = new CheckoutApi();
+
+//you can get token by calling getToken() method.
+$token = $checkout->getToken();
+
+//you can set token by calling setToken() method.
+$checkout->setToken($token['token']);
 ```
 
 ### Create Payment (Sale or Capture)
@@ -252,10 +258,17 @@ For calling **Tokenized Agreement** methods, first you need to create instance o
 
 Don't forget to import `use Divergent\Bkash\Apis\Tokenized\TokenizedApi;` top of the file.
 
-NOTE: Configurations will be fetch from your previously setup in **.env** file. 
+NOTE: Configurations will be fetch from your previously setup in **.env** file. Remember that you need to set token for authorization.
 
 ```
 $tokenized = new TokenizedApi();
+
+//you can get token by calling getToken() method.
+$token = $tokenized->getToken();
+
+//you can set token by calling setToken() method.
+$tokenized->setToken($token['token']);
+
 ```
 
 ### Create Agreement
