@@ -9,10 +9,10 @@ class BkashServiceProvider extends ServiceProvider {
     public function boot()
     {
         $this->mergeConfigFrom(__DIR__.'/config/bkash.php', 'bkash');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
         $this->publishes([
             __DIR__.'/config/bkash.php' => config_path('bkash.php'),
-        ]);
-        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
+        ]);        
     }
 
     public function register()

@@ -2,20 +2,20 @@
 
 namespace Divergent\Bkash\Apis\Recurring;
 
-use App\Models\ActivityLog;
-use Divergent\Bkash\BkashLog;
+use Divergent\Bkash\Consts\BkashConstant;
+use Divergent\Bkash\Consts\EndPoints;
 use Illuminate\Support\Facades\Http;
 
-class RecurringBaseApi {
+class RecurringApi {
 
     protected $config;
-    protected $baseUrl = 'https://gateway.sbrecurring.pay.bka.sh/gateway/api/';
+    protected $baseUrl = EndPoints::RECURRING_BASE_URL;
     public $currentTimestamp;
 
     public function __construct($config)
     {
         $this->config = $config;
-        $this->currentTimestamp = gmdate("Y-m-d\TH:i:s\Z");
+        $this->currentTimestamp = gmdate(BkashConstant::GMT_DATE_FORMAT);
     }
 
     public function callApi($request, $requestUrl, $body = [])
@@ -30,15 +30,6 @@ class RecurringBaseApi {
                 'Aceept' => 'application/json'
             ],
         )->$request($this->baseUrl . $requestUrl, $body);
-
-        // $content = 'API URL = ' . $this->baseUrl . $requestUrl . "\n DATE TIME = " . date('d M, Y h:i:s A') . "\n RESPONSE = " . json_encode($response->json())  . "\n ------------------------------------------------------------------------------------------------------------------------ \n\n";
-        // $log = new ActivityLog();
-        // $log->api_url = $this->baseUrl . $requestUrl;
-        // $log->date_time = date('d M, Y h:i:s A');
-        // $log->response = json_encode($response->json());
-        // $log->save();
-
-        //BkashLog::writeLog($content);
 
         return $response->json();
     }

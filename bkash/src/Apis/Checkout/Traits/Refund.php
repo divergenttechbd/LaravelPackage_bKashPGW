@@ -1,15 +1,17 @@
 <?php
 
-namespace Divergent\Bkash\Apis\Checkout;
+namespace Divergent\Bkash\Apis\Checkout\Traits;
 
-class Refund extends CheckoutBaseApi
+use Divergent\Bkash\Consts\BkashConstant;
+use Divergent\Bkash\Consts\EndPoints;
+
+trait Refund
 {
-
     public function refundTransaction($paymentID, $amount, $trxID, $sku, $reason)
     {
         return $this->callApi(
-            'POST',
-            'payment/refund',
+            BkashConstant::METHOD_POST,
+            EndPoints::CHECKOUT_PAYMENT_REFUND,
             [
                 'paymentID' => $paymentID,
                 'amount' => $amount,
@@ -23,8 +25,8 @@ class Refund extends CheckoutBaseApi
     public function refundStatus($paymentID, $trxID)
     {
         return $this->callApi(
-            'POST',
-            'payment/refund',
+            BkashConstant::METHOD_POST,
+            EndPoints::CHECKOUT_REFUND_STATUS,
             [
                 'paymentID' => $paymentID,
                 'trxID'     => $trxID

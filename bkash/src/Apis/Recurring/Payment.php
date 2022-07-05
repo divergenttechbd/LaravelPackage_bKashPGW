@@ -2,34 +2,37 @@
 
 namespace Divergent\Bkash\Apis\Recurring;
 
-class Payment extends RecurringBaseApi {
+use Divergent\Bkash\Consts\BkashConstant;
+use Divergent\Bkash\Consts\EndPoints;
 
-    public function __construct($config)
+class Payment extends RecurringApi {
+
+    public function __construct()
     {
-        parent::__construct($config);
+        parent::__construct(config(BkashConstant::RECURRING));
     }
 
     public function paymentListBySubscriptionID($subscriptionId)
     {
         return $this->callApi(
-            'GET',
-            'subscription/payment/bySubscriptionId/' . $subscriptionId
+            BkashConstant::METHOD_GET,
+            EndPoints::RECURRING_PAYMENT_LIST . $subscriptionId
         );
     }
     
     public function paymentInfoByPaymentID($paymentId)
     {
         return $this->callApi(
-            'GET',
-            'subscription/payment/' . $paymentId
+            BkashConstant::METHOD_GET,
+            EndPoints::RECURRING_PAYMENT_INFO . $paymentId
         );
     }
 
     public function refund($paymentId, $amount)
     {
         return $this->callApi(
-            'POST',
-            'subscription/payment/refund',
+            BkashConstant::METHOD_POST,
+            EndPoints::RECURRING_PAYMENT_REFUND,
             [
                 'paymentId' => $paymentId,
                 'amount' => $amount
@@ -40,8 +43,8 @@ class Payment extends RecurringBaseApi {
     public function schedule($frequency, $startDate, $expiryDate)
     {
         return $this->callApi(
-            "GET",
-            'subscription/payment/schedule',
+            BkashConstant::METHOD_GET,
+            EndPoints::RECURRING_PAYMENT_SCHEDULE,
             [
                 'frequency' => $frequency,
                 'startDate' => $startDate,
